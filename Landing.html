@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андрей Ганин — ML Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #222240;
+            --accent: #6c5ce7;
+            --accent-light: #a29bfe;
+            --accent-glow: rgba(108, 92, 231, 0.3);
+            --green: #00e676;
+            --green-glow: rgba(0, 230, 118, 0.2);
+            --orange: #ff9100;
+            --orange-glow: rgba(255, 145, 0, 0.2);
+            --blue: #00b0ff;
+            --blue-glow: rgba(0, 176, 255, 0.2);
+            --red: #ff5252;
+            --gold: #ffd700;
+            --bronze: #cd7f32;
+            --text-primary: #e8e8f0;
+            --text-secondary: #8888a0;
+            --text-muted: #555570;
+            --border: #2a2a40;
+            --font-main: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg-primary); }
+        body { font-family: var(--font-main); background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
+
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+            background-image: linear-gradient(rgba(108,92,231,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(108,92,231,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        .floating-orb { position: fixed; border-radius: 50%; filter: blur(80px); z-index: 0; pointer-events: none; animation: floatOrb 20s ease-in-out infinite; }
+        .orb-1 { width: 400px; height: 400px; background: var(--accent-glow); top: -100px; right: -100px; }
+        .orb-2 { width: 300px; height: 300px; background: var(--green-glow); bottom: -50px; left: -50px; animation-delay: -7s; }
+        .orb-3 { width: 250px; height: 250px; background: var(--blue-glow); top: 50%; left: 50%; animation-delay: -14s; }
+        @keyframes floatOrb {
+            0%,100% { transform: translate(0,0) scale(1); } 25% { transform: translate(50px,-80px) scale(1.1); }
+            50% { transform: translate(-30px,50px) scale(0.9); } 75% { transform: translate(80px,30px) scale(1.05); }
+        }
+
+        /* NAV */
+        .nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(20px); background: rgba(10,10,15,0.8); border-bottom: 1px solid var(--border); transition: all 0.3s ease; }
+        .nav.scrolled { padding: 10px 40px; background: rgba(10,10,15,0.95); }
+        .nav-logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(135deg, var(--accent-light), var(--green)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease; position: relative; }
+        .nav-links a:hover { color: var(--accent-light); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.3s ease; }
+        .nav-links a:hover::after { width: 100%; }
+        .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; }
+        .burger span { width: 25px; height: 2px; background: var(--text-primary); transition: 0.3s; }
+
+        /* SECTIONS */
+        section { position: relative; z-index: 1; padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
+        .section-label { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .section-label::before { content: ''; display: block; width: 30px; height: 1px; background: var(--accent); }
+        .section-title { font-size: 2.8rem; font-weight: 800; margin-bottom: 50px; line-height: 1.2; letter-spacing: -1px; }
+        .section-title .highlight { background: linear-gradient(135deg, var(--accent-light), var(--green)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* ANIMATIONS */
+        .fade-in { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .fade-in-left { opacity: 0; transform: translateX(-60px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .fade-in-left.visible { opacity: 1; transform: translateX(0); }
+        .fade-in-right { opacity: 0; transform: translateX(60px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .fade-in-right.visible { opacity: 1; transform: translateX(0); }
+        .scale-in { opacity: 0; transform: scale(0.85); transition: all 0.6s cubic-bezier(0.16,1,0.3,1); }
+        .scale-in.visible { opacity: 1; transform: scale(1); }
+
+        /* HERO */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 80px; }
+        .hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; background: rgba(108,92,231,0.1); border: 1px solid rgba(108,92,231,0.3); border-radius: 100px; font-size: 0.8rem; font-weight: 500; color: var(--accent-light); margin-bottom: 24px; font-family: var(--font-mono); }
+        .hero-badge .dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(1.5); } }
+        .hero-name { font-size: 4.5rem; font-weight: 900; line-height: 1.05; margin-bottom: 16px; letter-spacing: -2px; }
+        .hero-name .gradient { background: linear-gradient(135deg, var(--accent-light), var(--blue), var(--green)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shimmer 4s ease-in-out infinite; }
+        @keyframes shimmer { 0%,100% { background-position: 0% center; } 50% { background-position: 200% center; } }
+        .hero-subtitle { font-size: 1.3rem; color: var(--text-secondary); margin-bottom: 32px; max-width: 500px; line-height: 1.8; }
+        .hero-subtitle strong { color: var(--text-primary); font-weight: 600; }
+        .hero-stats { display: flex; gap: 40px; margin-bottom: 40px; }
+        .stat { text-align: left; }
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--accent-light); font-family: var(--font-mono); line-height: 1; }
+        .stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+        .hero-buttons { display: flex; gap: 16px; }
+        .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; font-size: 0.95rem; font-weight: 600; border-radius: 12px; text-decoration: none; transition: all 0.3s ease; cursor: pointer; border: none; font-family: var(--font-main); }
+        .btn-primary { background: linear-gradient(135deg, var(--accent), #8b5cf6); color: white; box-shadow: 0 4px 20px var(--accent-glow); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 30px var(--accent-glow); }
+        .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border); }
+        .btn-outline:hover { border-color: var(--accent); background: rgba(108,92,231,0.05); transform: translateY(-3px); }
+
+        .hero-photo-container { position: relative; display: flex; justify-content: center; align-items: center; }
+        .hero-photo-frame { position: relative; width: 380px; height: 380px; border-radius: 30px; overflow: hidden; border: 2px solid var(--border); background: var(--bg-card); }
+        .hero-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-photo-frame::before { content: ''; position: absolute; inset: -2px; border-radius: 32px; background: linear-gradient(135deg, var(--accent), var(--green), var(--blue)); z-index: -1; animation: borderRotate 6s linear infinite; }
+        @keyframes borderRotate { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
+
+        .floating-badge { position: absolute; padding: 10px 18px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(10px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); animation: floatBadge 4s ease-in-out infinite; }
+        .floating-badge:nth-child(2) { top: 20px; right: -30px; animation-delay: -1s; }
+        .floating-badge:nth-child(3) { bottom: 40px; left: -40px; animation-delay: -2s; }
+        .floating-badge:nth-child(4) { top: 50%; right: -50px; animation-delay: -3s; }
+        @keyframes floatBadge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .floating-badge i { color: var(--accent-light); font-size: 1.1rem; }
+
+        /* ABOUT */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+        .about-text p { color: var(--text-secondary); margin-bottom: 20px; font-size: 1.05rem; }
+        .about-text strong { color: var(--text-primary); }
+        .about-details { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .detail-card { padding: 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; transition: all 0.3s ease; }
+        .detail-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(108,92,231,0.1); }
+        .detail-icon { font-size: 1.8rem; margin-bottom: 10px; line-height: 1; }
+        .detail-icon i { transition: transform 0.3s ease; }
+        .detail-card:hover .detail-icon i { transform: scale(1.15); }
+        .detail-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .detail-value { font-size: 1rem; font-weight: 600; margin-top: 4px; }
+
+        /* icon color classes */
+        .icon-purple { color: var(--accent-light); }
+        .icon-green { color: var(--green); }
+        .icon-blue { color: var(--blue); }
+        .icon-orange { color: var(--orange); }
+        .icon-red { color: var(--red); }
+        .icon-gold { color: var(--gold); }
+        .icon-bronze { color: var(--bronze); }
+
+        /* SKILLS */
+        .skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+        .skill-category { padding: 30px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .skill-category::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--accent), transparent); opacity: 0; transition: opacity 0.3s; }
+        .skill-category:hover::before { opacity: 1; }
+        .skill-category:hover { border-color: rgba(108,92,231,0.3); transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.2); }
+        .skill-cat-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 16px; transition: transform 0.3s ease; }
+        .skill-category:hover .skill-cat-icon { transform: scale(1.1) rotate(-5deg); }
+        .skill-cat-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .skill-tag { padding: 5px 14px; background: rgba(108,92,231,0.08); border: 1px solid rgba(108,92,231,0.15); border-radius: 8px; font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-secondary); transition: all 0.2s; }
+        .skill-tag:hover { background: rgba(108,92,231,0.15); border-color: var(--accent); color: var(--accent-light); }
+
+        /* ACHIEVEMENTS */
+        .achievements-list { display: flex; flex-direction: column; gap: 16px; }
+        .achievement-card { display: grid; grid-template-columns: 80px 1fr auto; gap: 24px; align-items: center; padding: 24px 30px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; transition: all 0.3s ease; }
+        .achievement-card:hover { border-color: var(--accent); transform: translateX(8px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+        .achievement-icon-wrap { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto; transition: transform 0.3s ease; }
+        .achievement-card:hover .achievement-icon-wrap { transform: scale(1.1); }
+        .achievement-rank-text { text-align: center; margin-top: 4px; font-size: 0.65rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+        .achievement-info h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+        .achievement-info p { font-size: 0.85rem; color: var(--text-secondary); }
+        .achievement-meta { text-align: right; }
+        .achievement-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge-medal { background: rgba(205,127,50,0.15); color: var(--bronze); border: 1px solid rgba(205,127,50,0.3); }
+        .badge-prize { background: rgba(0,230,118,0.1); color: var(--green); border: 1px solid rgba(0,230,118,0.3); }
+        .badge-finalist { background: rgba(0,176,255,0.1); color: var(--blue); border: 1px solid rgba(0,176,255,0.3); }
+        .badge-top { background: rgba(108,92,231,0.1); color: var(--accent-light); border: 1px solid rgba(108,92,231,0.3); }
+
+        /* KAGGLE */
+        .kaggle-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
+        .kaggle-stats-bar { display: flex; gap: 30px; }
+        .kaggle-stat { text-align: center; }
+        .kaggle-stat-num { font-family: var(--font-mono); font-size: 1.8rem; font-weight: 800; color: var(--accent-light); }
+        .kaggle-stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .kaggle-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+        .kaggle-card { padding: 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; transition: all 0.3s ease; display: flex; flex-direction: column; gap: 12px; }
+        .kaggle-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+        .kaggle-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+        .kaggle-card-title-group { display: flex; align-items: center; gap: 10px; max-width: 80%; }
+        .kaggle-card-icon { font-size: 1.3rem; flex-shrink: 0; }
+        .kaggle-card-title { font-size: 0.95rem; font-weight: 700; line-height: 1.4; }
+        .kaggle-card-position { font-family: var(--font-mono); font-weight: 800; font-size: 1rem; white-space: nowrap; }
+        .kaggle-card-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+        .kaggle-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .kaggle-type { font-size: 0.7rem; padding: 3px 10px; border-radius: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .type-featured { background: rgba(108,92,231,0.1); color: var(--accent-light); }
+        .type-research { background: rgba(0,230,118,0.1); color: var(--green); }
+        .type-playground { background: rgba(0,176,255,0.1); color: var(--blue); }
+        .type-community { background: rgba(255,145,0,0.1); color: var(--orange); }
+        .kaggle-card-teams { font-size: 0.75rem; color: var(--text-muted); }
+
+        .percentage-bar { width: 100%; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+        .percentage-fill { height: 100%; border-radius: 2px; width: 0; transition: width 1.5s cubic-bezier(0.16,1,0.3,1); }
+        .rank-gold { color: var(--gold); }
+        .rank-bronze { color: var(--bronze); }
+        .rank-top5 { color: var(--green); }
+        .rank-top10 { color: var(--blue); }
+        .rank-top20 { color: var(--accent-light); }
+
+        /* PROJECTS */
+        .projects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+        .project-card { padding: 30px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .project-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(108,92,231,0.03), transparent); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+        .project-card:hover { border-color: var(--accent); transform: translateY(-8px); box-shadow: 0 16px 50px rgba(0,0,0,0.25); }
+        .project-card:hover::after { opacity: 1; }
+        .project-icon-wrap { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 18px; transition: transform 0.3s ease; }
+        .project-card:hover .project-icon-wrap { transform: scale(1.1) rotate(-5deg); }
+        .project-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
+        .project-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.7; }
+        .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+        .stack-tag { padding: 4px 12px; background: rgba(108,92,231,0.06); border: 1px solid var(--border); border-radius: 6px; font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); }
+
+        /* INTERESTS */
+        .interests-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+        .interest-card { padding: 30px 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; text-align: center; transition: all 0.3s ease; }
+        .interest-card:hover { border-color: var(--accent); transform: translateY(-6px); }
+        .interest-icon-wrap { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 14px; transition: transform 0.3s ease; }
+        .interest-card:hover .interest-icon-wrap { transform: scale(1.15) rotate(10deg); }
+        .interest-title { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+        .interest-desc { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* CONTACT */
+        .contact-content { text-align: center; max-width: 600px; margin: 0 auto; }
+        .contact-content p { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 40px; }
+        .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+        .contact-link { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; color: var(--text-primary); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: all 0.3s ease; }
+        .contact-link:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(108,92,231,0.15); }
+        .contact-link i { font-size: 1.2rem; color: var(--accent-light); }
+
+        .footer { position: relative; z-index: 1; padding: 30px 40px; border-top: 1px solid var(--border); text-align: center; }
+        .footer p { color: var(--text-muted); font-size: 0.85rem; }
+        .footer .heart { color: var(--red); }
+        .count-up { display: inline-block; }
+
+        @media (max-width: 900px) {
+            section { padding: 60px 20px; }
+            .hero-content { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+            .hero-name { font-size: 2.8rem; }
+            .hero-subtitle { margin: 0 auto 24px; }
+            .hero-stats { justify-content: center; }
+            .hero-buttons { justify-content: center; }
+            .hero-photo-container { order: -1; }
+            .hero-photo-frame { width: 250px; height: 250px; }
+            .about-grid { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .kaggle-grid { grid-template-columns: 1fr; }
+            .kaggle-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .interests-grid { grid-template-columns: repeat(2,1fr); }
+            .section-title { font-size: 2rem; }
+            .achievement-card { grid-template-columns: 70px 1fr; gap: 16px; }
+            .achievement-meta { grid-column: 1 / -1; text-align: left; }
+            .nav-links { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg-primary); flex-direction: column; justify-content: center; align-items: center; gap: 30px; }
+            .nav-links.active { display: flex; }
+            .nav-links a { font-size: 1.3rem; }
+            .burger { display: flex; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+
+    <nav class="nav" id="nav">
+        <div class="nav-logo">Andrei Ganin</div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">Обо мне</a></li>
+            <li><a href="#skills">Навыки</a></li>
+            <li><a href="#achievements">Достижения</a></li>
+            <li><a href="#kaggle">Kaggle</a></li>
+            <li><a href="#projects">Проекты</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+        <div class="burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-text fade-in-left">
+                <div class="hero-badge"><span class="dot"></span> Открыт к предложениям</div>
+                <h1 class="hero-name">Андрей<br><span class="gradient">Ганин</span></h1>
+                <p class="hero-subtitle">
+                    <strong>ML-инженер</strong> и олимпиадник по ИИ.
+                    Призёр НТО, финалист Всеросса, бронзовый медалист Kaggle.
+                    Никогда не сдаюсь и работаю на максимум.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat"><div class="stat-number count-up" data-target="18">0</div><div class="stat-label">Соревнований Kaggle</div></div>
+                    <div class="stat"><div class="stat-number">Top 2%</div><div class="stat-label">Лучший результат</div></div>
+                    <div class="stat"><div class="stat-number count-up" data-target="17">0</div><div class="stat-label">Лет</div></div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary"><i class="ph-duotone ph-paper-plane-tilt"></i> Связаться</a>
+                    <a href="https://github.com/AndreiGanin2910" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+            <div class="hero-photo-container fade-in-right">
+                <div class="hero-photo-frame">
+                    <img src="photo.jpg" alt="Андрей Ганин" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;background:linear-gradient(135deg,#1a1a2e,#2a2a4e)\'><i class=\'ph-duotone ph-brain\' style=\'color:#a29bfe\'></i></div>'">
+                </div>
+                <div class="floating-badge"><i class="ph-duotone ph-trophy icon-gold"></i> Призёр НТО ИИ</div>
+                <div class="floating-badge"><i class="ph-duotone ph-medal icon-bronze"></i> Kaggle Bronze</div>
+                <div class="floating-badge"><i class="ph-duotone ph-ranking icon-green"></i> 2 место RecSys</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="about-grid">
+            <div class="about-text fade-in-left">
+                <div class="section-label">Обо мне</div>
+                <h2 class="section-title">Строю модели,<br><span class="highlight">ломаю лидерборды</span></h2>
+                <p>Мне 17 лет, я из Москвы. Занимаюсь машинным обучением, участвую в олимпиадах по искусственному интеллекту и соревнованиях на Kaggle. За плечами — <strong>18 соревнований</strong>, бронзовая медаль и сотни часов работы.</p>
+                <p>Мой стек: от классического ML с CatBoost и LightGBM до глубокого обучения на PyTorch, компьютерного зрения (YOLO, ResNet, ViT), NLP (BERT, GPT) и генеративного ИИ (RAG, LoRA, Stable Diffusion).</p>
+                <p>Помимо кода люблю <strong>ходить в зал</strong>, играть в <strong>волейбол</strong> и посещать <strong>конференции</strong> по AI.</p>
+            </div>
+            <div class="about-details fade-in-right">
+                <div class="detail-card">
+                    <div class="detail-icon"><i class="ph-duotone ph-map-pin icon-red"></i></div>
+                    <div class="detail-label">Город</div><div class="detail-value">Москва</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-icon"><i class="ph-duotone ph-graduation-cap icon-blue"></i></div>
+                    <div class="detail-label">Возраст</div><div class="detail-value">17 лет</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-icon"><i class="ph-duotone ph-crosshair icon-purple"></i></div>
+                    <div class="detail-label">Фокус</div><div class="detail-value">ML / DS / Аналитика</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-icon"><i class="ph-duotone ph-lightning icon-gold"></i></div>
+                    <div class="detail-label">Принцип</div><div class="detail-value">Работать на максимум</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-icon"><i class="ph-duotone ph-volleyball icon-orange"></i></div>
+                    <div class="detail-label">Спорт</div><div class="detail-value">Зал & Волейбол</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-icon"><i class="ph-duotone ph-microphone-stage icon-green"></i></div>
+                    <div class="detail-label">Хобби</div><div class="detail-value">AI-конференции</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+        <div class="section-label fade-in">Навыки</div>
+        <h2 class="section-title fade-in">Технологический <span class="highlight">стек</span></h2>
+        <div class="skills-grid">
+            <div class="skill-category fade-in" style="transition-delay:0.1s">
+                <div class="skill-cat-icon" style="background:rgba(108,92,231,0.1)"><i class="ph-duotone ph-code icon-purple"></i></div>
+                <h3 class="skill-cat-title">Python & Core</h3>
+                <div class="skill-tags"><span class="skill-tag">Python</span><span class="skill-tag">NumPy</span><span class="skill-tag">Pandas</span><span class="skill-tag">OOP</span><span class="skill-tag">itertools</span><span class="skill-tag">collections</span></div>
+            </div>
+            <div class="skill-category fade-in" style="transition-delay:0.2s">
+                <div class="skill-cat-icon" style="background:rgba(0,230,118,0.1)"><i class="ph-duotone ph-robot icon-green"></i></div>
+                <h3 class="skill-cat-title">Классический ML</h3>
+                <div class="skill-tags"><span class="skill-tag">scikit-learn</span><span class="skill-tag">CatBoost</span><span class="skill-tag">LightGBM</span><span class="skill-tag">AutoGluon</span><span class="skill-tag">Optuna</span><span class="skill-tag">Feature Engineering</span></div>
+            </div>
+            <div class="skill-category fade-in" style="transition-delay:0.3s">
+                <div class="skill-cat-icon" style="background:rgba(0,176,255,0.1)"><i class="ph-duotone ph-brain icon-blue"></i></div>
+                <h3 class="skill-cat-title">Deep Learning</h3>
+                <div class="skill-tags"><span class="skill-tag">PyTorch</span><span class="skill-tag">ResNet</span><span class="skill-tag">ViT</span><span class="skill-tag">YOLO</span><span class="skill-tag">U-Net</span><span class="skill-tag">Albumentations</span><span class="skill-tag">WandB</span></div>
+            </div>
+            <div class="skill-category fade-in" style="transition-delay:0.4s">
+                <div class="skill-cat-icon" style="background:rgba(255,145,0,0.1)"><i class="ph-duotone ph-chat-centered-text icon-orange"></i></div>
+                <h3 class="skill-cat-title">NLP & GenAI</h3>
+                <div class="skill-tags"><span class="skill-tag">Transformers</span><span class="skill-tag">BERT</span><span class="skill-tag">GPT</span><span class="skill-tag">LangChain</span><span class="skill-tag">RAG</span><span class="skill-tag">LoRA</span><span class="skill-tag">Ollama</span></div>
+            </div>
+            <div class="skill-category fade-in" style="transition-delay:0.5s">
+                <div class="skill-cat-icon" style="background:rgba(255,82,82,0.1)"><i class="ph-duotone ph-chart-line-up icon-red"></i></div>
+                <h3 class="skill-cat-title">Аналитика & Визуализация</h3>
+                <div class="skill-tags"><span class="skill-tag">SQL</span><span class="skill-tag">Matplotlib</span><span class="skill-tag">Seaborn</span><span class="skill-tag">Plotly</span><span class="skill-tag">Streamlit</span><span class="skill-tag">A/B тесты</span></div>
+            </div>
+            <div class="skill-category fade-in" style="transition-delay:0.6s">
+                <div class="skill-cat-icon" style="background:rgba(255,215,0,0.1)"><i class="ph-duotone ph-gear-six icon-gold"></i></div>
+                <h3 class="skill-cat-title">Инфраструктура</h3>
+                <div class="skill-tags"><span class="skill-tag">Git</span><span class="skill-tag">Docker</span><span class="skill-tag">FastAPI</span><span class="skill-tag">MLflow</span><span class="skill-tag">DVC</span><span class="skill-tag">Figma</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section id="achievements">
+        <div class="section-label fade-in">Достижения</div>
+        <h2 class="section-title fade-in">Олимпиады и <span class="highlight">хакатоны</span></h2>
+        <div class="achievements-list">
+            <div class="achievement-card fade-in" style="transition-delay:0.1s">
+                <div><div class="achievement-icon-wrap" style="background:rgba(255,215,0,0.1)"><i class="ph-duotone ph-trophy icon-gold"></i></div><div class="achievement-rank-text">Призёр</div></div>
+                <div class="achievement-info"><h3>НТО — Искусственный интеллект</h3><p>Национальная технологическая олимпиада. Профиль «Искусственный интеллект»</p></div>
+                <div class="achievement-meta"><span class="achievement-badge badge-prize"><i class="ph-duotone ph-trophy"></i> Призёр</span></div>
+            </div>
+            <div class="achievement-card fade-in" style="transition-delay:0.15s">
+                <div><div class="achievement-icon-wrap" style="background:rgba(0,230,118,0.1)"><i class="ph-duotone ph-flag-banner icon-green"></i></div><div class="achievement-rank-text">Финалист</div></div>
+                <div class="achievement-info"><h3>Всероссийская олимпиада школьников</h3><p>Финалист заключительного этапа по ИИ (50 человек с России)</p></div>
+                <div class="achievement-meta"><span class="achievement-badge badge-finalist"><i class="ph-duotone ph-flag-banner"></i> Финалист</span></div>
+            </div>
+            <div class="achievement-card fade-in" style="transition-delay:0.2s">
+                <div><div class="achievement-icon-wrap" style="background:rgba(255,215,0,0.1)"><i class="ph-duotone ph-medal icon-gold"></i></div><div class="achievement-rank-text">2 место</div></div>
+                <div class="achievement-info"><h3>Хакатон — Рекомендательные системы</h3><p>Разработка рекомендательной системы для книжной полки. Соло.</p></div>
+                <div class="achievement-meta"><span class="achievement-badge badge-prize"><i class="ph-duotone ph-medal"></i> 2 место</span></div>
+            </div>
+            <div class="achievement-card fade-in" style="transition-delay:0.25s">
+                <div><div class="achievement-icon-wrap" style="background:rgba(0,176,255,0.1)"><i class="ph-duotone ph-chart-bar icon-blue"></i></div><div class="achievement-rank-text">Финалист</div></div>
+                <div class="achievement-info"><h3>DEADLINE</h3><p>Олимпиада по бизнесу и аналитике</p></div>
+                <div class="achievement-meta"><span class="achievement-badge badge-finalist"><i class="ph-duotone ph-chart-bar"></i> Финалист</span></div>
+            </div>
+            <div class="achievement-card fade-in" style="transition-delay:0.3s">
+                <div><div class="achievement-icon-wrap" style="background:rgba(205,127,50,0.1)"><i class="ph-duotone ph-medal icon-bronze"></i></div><div class="achievement-rank-text">Top 5%</div></div>
+                <div class="achievement-info"><h3>Kaggle — CAFA 6 Protein Function</h3><p>115 место из 2259 команд. Бронзовая медаль. Предсказание функции белка.</p></div>
+                <div class="achievement-meta"><span class="achievement-badge badge-medal"><i class="ph-duotone ph-medal"></i> Bronze Medal</span></div>
+            </div>
+            <div class="achievement-card fade-in" style="transition-delay:0.35s">
+                <div><div class="achievement-icon-wrap" style="background:rgba(0,176,255,0.1)"><i class="ph-duotone ph-house-line icon-blue"></i></div><div class="achievement-rank-text">Top 2%</div></div>
+                <div class="achievement-info"><h3>Kaggle — House Prices</h3><p>76 место из 4500+ команд. Предсказание цен на недвижимость.</p></div>
+                <div class="achievement-meta"><span class="achievement-badge badge-top"><i class="ph-duotone ph-star"></i> Top 2%</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KAGGLE -->
+    <section id="kaggle">
+        <div class="kaggle-header">
+            <div>
+                <div class="section-label fade-in">Kaggle</div>
+                <h2 class="section-title fade-in">Все <span class="highlight">соревнования</span></h2>
+            </div>
+            <div class="kaggle-stats-bar fade-in">
+                <div class="kaggle-stat"><div class="kaggle-stat-num count-up" data-target="18">0</div><div class="kaggle-stat-label">Соревнований</div></div>
+                <div class="kaggle-stat"><div class="kaggle-stat-num">1</div><div class="kaggle-stat-label">Медаль</div></div>
+                <div class="kaggle-stat"><div class="kaggle-stat-num">14</div><div class="kaggle-stat-label">Соло</div></div>
+                <div class="kaggle-stat"><div class="kaggle-stat-num">4</div><div class="kaggle-stat-label">В команде</div></div>
+            </div>
+        </div>
+        <div class="kaggle-grid">
+            <div class="kaggle-card fade-in" style="transition-delay:0.05s">
+                <div class="kaggle-card-header">
+                    <div class="kaggle-card-title-group"><i class="ph-duotone ph-dna icon-green kaggle-card-icon"></i><div class="kaggle-card-title">CAFA 6 Protein Function Prediction</div></div>
+                    <div class="kaggle-card-position rank-bronze">115/2259</div>
+                </div>
+                <div class="kaggle-card-desc">Предсказание биологической функции белка</div>
+                <div class="percentage-bar"><div class="percentage-fill" data-target-width="95" style="background:var(--bronze)"></div></div>
+                <div class="kaggle-card-footer"><span class="kaggle-type type-research">Research</span><span class="kaggle-card-teams">Bronze Medal · В команде</span></div>
+            </div>
+            <div class="kaggle-card fade-in" style="transition-delay:0.1s">
+                <div class="kaggle-card-header">
+                    <div class="kaggle-card-title-group"><i class="ph-duotone ph-house-line icon-green kaggle-card-icon"></i><div class="kaggle-card-title">House Prices: Advanced Regression</div></div>
+                    <div class="kaggle-card-position rank-top5">76/4500</div>
+                </div>
+                <div class="kaggle-card-desc">Предсказание цен на жильё</div>
+                <div class="percentage-bar"><div class="percentage-fill" data-target-width="98" style="background:var(--green)"></div></div>
+                <div class="kaggle-card-footer"><span class="kaggle-type type-featured">Featured</span><span class="kaggle-card-teams">Top 2%</span></div>
+            </div>
+            <div class="kaggle-card fade-in" style="transition-delay:0.15s">
+                <div class="kaggle-card-header">
+                    <div class="kaggle-card-title-group"><i class="ph-duotone ph-flask icon-purple kaggle-card-icon"></i><div class="kaggle-card-title">Stanford RNA 3D Folding Part 2</div></div>
+                    <div class="kaggle-card-position rank-top20">316/1867</div>
+                </div>
+                <div class="kaggle-card-desc">Предсказание 3D-структуры РНК</div>
+                <div class="percentage-bar"><div class="percentage-fill" data-target-width="83" style="background:var(--accent)"></div></div>
+                <div class="kaggle-card-footer"><span class="kaggle-type type-featured">Featured · Code</span><span class="kaggle-card-teams">В команде</span></div>
+            </div>
+            <div class="kaggle-card fade-in" style="transition-delay:0.2s">
+                <div class="kaggle-card-header">
+                    <div class="kaggle-card-title-group"><i class="ph-duotone ph-tree icon-green kaggle-card-icon"></i><div class="kaggle-card-title">Santa 2025 — Christmas Tree Packing</div></div>
+                    <div class="kaggle-card-position rank-top20">367/3357</div>
+                </div>
+                <div class="kaggle-card-desc">Задача оптимизации — упаковка ёлок</div>
+                <div class="percentage-bar"><div class="percentage-fill" data-target-width="89" style="background:var(--accent)"></div></div>
+                <div class="kaggle-card-footer"><span class="kaggle-type type-featured">Featured</span><span class="kaggle-card-teams">В команде</span></div>
+            </div>
+            <div class="kaggle-card fade-in" style="transition-delay:0.25s">
+                <div class="kaggle-card-header">
+                    <div class="kaggle-card-title-group"><i class="ph-duotone ph-plant icon-green kaggle-card-icon"></i><div class="kaggle-card-title">Predicting Irrigation Need</div></div>
+                    <div class="kaggle-card-position rank-top20">355/4315</div>
+                </div>
+                <div class="kaggle-card-desc">Playground Series S6E4</div>
+                <div class="percentage-bar"><div class="percentage-fill" data-target-width="92" style="background:var(--blue)"></div></div>
+                <div class="kaggle-card-footer"><span class="kaggle-type type-playground">Playground</span><span class="kaggle-card-teams">Соло</span></div>
+            </div>
+            <div class="kaggle-card fade-in" style="transition-delay:0.3s">
+                <div class="kaggle-card-header">
+                    <div class="kaggle-card-title-group"><i class="ph-duotone ph-star icon-gold kaggle-card-icon"></i><div class="kaggle-card-title">Predicting Stellar Class</div></div>
+                    <div class="kaggle-card-position rank-top20">370/2816</div>
+                </div>
+                <div class="kaggle-card-desc">Playground Series S6E6</div>
+                <div class="percentage-bar"><div class="percentage-fill" data-target-width="87" style="background:var(--blue)"></div></div>
+                <div class="kaggle-card-footer"><span class="kaggle-type type-playground">Playground</span><span class="kaggle-card-teams">Соло</span></div>
+            </div>
+            <div class="kaggle-card fade-in" style="transition-delay:0.35s">
+                <div class="kaggle-card-header">
+                    <div class="kaggle-card-title-group"><i class="ph-duotone ph-scroll icon-orange kaggle-card-icon"></i><div class="kaggle-card-title">Deep Past — Translate Akkadian</div></div>
+                    <div class="kaggle-card-position rank-top20">527/2674</div>
+                </div>
+                <div class="kaggle-card-desc">Машинный перевод аккадского языка на английский</div>
+                <div class="percentage-bar"><div class="percentage-fill" data-target-width="80" style="background:var(--accent)"></div></div>
+                <div class="kaggle-card-footer"><span class="kaggle-type type-featured">Featured · Code</span><span class="kaggle-card-teams">Соло</span></div>
+            </div>
+            <div class="kaggle-card fade-in" style="transition-delay:0.4s">
+                <div class="kaggle-card-header">
+                    <div class="kaggle-card-title-group"><i class="ph-duotone ph-bank icon-orange kaggle-card-icon"></i><div class="kaggle-card-title">Vesuvius — Surface Detection</div></div>
+                    <div class="kaggle-card-position">537/1391</div>
+                </div>
+                <div class="kaggle-card-desc">Виртуальное разворачивание древних свитков</div>
+                <div class="percentage-bar"><div class="percentage-fill" data-target-width="61" style="background:var(--orange)"></div></div>
+                <div class="kaggle-card-footer"><span class="kaggle-type type-research">Research · Code</span><span class="kaggle-card-teams">Соло</span></div>
+            </div>
+            <div class="kaggle-card fade-in" style="transition-delay:0.45s">
+                <div class="kaggle-card-header">
+                    <div class="kaggle-card-title-group"><i class="ph-duotone ph-leaf icon-green kaggle-card-icon"></i><div class="kaggle-card-title">Image2Biomass Prediction</div></div>
+                    <div class="kaggle-card-position">754/3805</div>
+                </div>
+                <div class="kaggle-card-desc">Предсказание биомассы по фотографиям пастбищ</div>
+                <div class="percentage-bar"><div class="percentage-fill" data-target-width="80" style="background:var(--green)"></div></div>
+                <div class="kaggle-card-footer"><span class="kaggle-type type-research">Research · Code</span><span class="kaggle-card-teams">Соло</span></div>
+            </div>
+            <div class="kaggle-card fade-in" style="transition-delay:0.5s">
+                <div class="kaggle-card-header">
+                    <div class="kaggle-card-title-group"><i class="ph-duotone ph-planet icon-purple kaggle-card-icon"></i><div class="kaggle-card-title">MALLORN Astronomical Classification</div></div>
+                    <div class="kaggle-card-position">280/893</div>
+                </div>
+                <div class="kaggle-card-desc">Классификация астрономических событий — ловим чёрные дыры</div>
+                <div class="percentage-bar"><div class="percentage-fill" data-target-width="69" style="background:var(--orange)"></div></div>
+                <div class="kaggle-card-footer"><span class="kaggle-type type-community">Community</span><span class="kaggle-card-teams">Соло</span></div>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:40px;">
+            <a href="https://www.kaggle.com/qwertyyyy769492" target="_blank" class="btn btn-outline"><i class="fab fa-kaggle"></i> Полный профиль на Kaggle</a>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+        <div class="section-label fade-in">Проекты</div>
+        <h2 class="section-title fade-in">Избранные <span class="highlight">проекты</span></h2>
+        <div class="projects-grid">
+            <div class="project-card fade-in" style="transition-delay:0.1s">
+                <div class="project-icon-wrap" style="background:rgba(0,230,118,0.1)"><i class="ph-duotone ph-microscope icon-green"></i></div>
+                <h3 class="project-title">Предсказание функции белка</h3>
+                <p class="project-desc">Мультилейбл классификация белков по Gene Ontology. Ансамбль моделей, feature engineering на последовательностях. Top 5% Kaggle.</p>
+                <div class="project-stack"><span class="stack-tag">PyTorch</span><span class="stack-tag">LightGBM</span><span class="stack-tag">Embeddings</span><span class="stack-tag">Ensemble</span></div>
+            </div>
+            <div class="project-card fade-in" style="transition-delay:0.2s">
+                <div class="project-icon-wrap" style="background:rgba(108,92,231,0.1)"><i class="ph-duotone ph-chat-circle-dots icon-purple"></i></div>
+                <h3 class="project-title">RAG-ассистент на документах</h3>
+                <p class="project-desc">Чат-бот с поиском по PDF-документам. Local LLM через Ollama, векторная база ChromaDB, интерфейс на Streamlit.</p>
+                <div class="project-stack"><span class="stack-tag">LangChain</span><span class="stack-tag">ChromaDB</span><span class="stack-tag">Ollama</span><span class="stack-tag">Streamlit</span></div>
+            </div>
+            <div class="project-card fade-in" style="transition-delay:0.3s">
+                <div class="project-icon-wrap" style="background:rgba(0,176,255,0.1)"><i class="ph-duotone ph-scan icon-blue"></i></div>
+                <h3 class="project-title">Object Detection — YOLO</h3>
+                <p class="project-desc">Детекция объектов на изображениях. Fine-tuning YOLOv8, аугментации через Albumentations, TTA, WBF-ансамбли.</p>
+                <div class="project-stack"><span class="stack-tag">YOLOv8</span><span class="stack-tag">Albumentations</span><span class="stack-tag">OpenCV</span><span class="stack-tag">WandB</span></div>
+            </div>
+            <div class="project-card fade-in" style="transition-delay:0.4s">
+                <div class="project-icon-wrap" style="background:rgba(255,145,0,0.1)"><i class="ph-duotone ph-graph icon-orange"></i></div>
+                <h3 class="project-title">Рекомендательная система</h3>
+                <p class="project-desc">Гибридная RecSys: коллаборативная фильтрация + контентные эмбеддинги. 2 место на хакатоне.</p>
+                <div class="project-stack"><span class="stack-tag">LightFM</span><span class="stack-tag">CatBoost</span><span class="stack-tag">implicit</span></div>
+            </div>
+            <div class="project-card fade-in" style="transition-delay:0.5s">
+                <div class="project-icon-wrap" style="background:rgba(255,215,0,0.1)"><i class="ph-duotone ph-currency-btc icon-gold"></i></div>
+                <h3 class="project-title">Bybit Market Microstructure Analyzer</h3>
+                <p class="project-desc">Одной командой — полный анализ микроструктуры рынка за 24 часа. Сбор ордербука, трейдов и ликвидаций через API Bybit, расчёт метрик (spread, imbalance, VWAP, volatility), визуализация и автоотчёт.</p>
+                <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">Bybit API</span><span class="stack-tag">Pandas</span><span class="stack-tag">Plotly</span><span class="stack-tag">asyncio</span></div>
+            </div>
+            <div class="project-card fade-in" style="transition-delay:0.6s">
+                <div class="project-icon-wrap" style="background:rgba(0,176,255,0.1)"><i class="ph-duotone ph-house-line icon-blue"></i></div>
+                <h3 class="project-title">House Prices — Top 2%</h3>
+                <p class="project-desc">Feature engineering, stacking, блендинг моделей. 76 место из 4500+ команд.</p>
+                <div class="project-stack"><span class="stack-tag">CatBoost</span><span class="stack-tag">XGBoost</span><span class="stack-tag">Optuna</span><span class="stack-tag">Stacking</span></div>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:40px;">
+            <a href="https://github.com/AndreiGanin2910" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> Все проекты на GitHub</a>
+        </div>
+    </section>
+
+    <!-- INTERESTS -->
+    <section id="interests">
+        <div class="section-label fade-in">Помимо кода</div>
+        <h2 class="section-title fade-in">Интересы и <span class="highlight">увлечения</span></h2>
+        <div class="interests-grid">
+            <div class="interest-card fade-in scale-in" style="transition-delay:0.1s">
+                <div class="interest-icon-wrap" style="background:rgba(255,82,82,0.1)"><i class="ph-duotone ph-barbell icon-red"></i></div>
+                <h3 class="interest-title">Тренажёрный зал</h3>
+                <div class="interest-desc">Дисциплина в зале = дисциплина в коде</div>
+            </div>
+            <div class="interest-card fade-in scale-in" style="transition-delay:0.2s">
+                <div class="interest-icon-wrap" style="background:rgba(255,145,0,0.1)"><i class="ph-duotone ph-volleyball icon-orange"></i></div>
+                <h3 class="interest-title">Волейбол</h3>
+                <div class="interest-desc">Командная работа и быстрые решения</div>
+            </div>
+            <div class="interest-card fade-in scale-in" style="transition-delay:0.3s">
+                <div class="interest-icon-wrap" style="background:rgba(0,230,118,0.1)"><i class="ph-duotone ph-microphone-stage icon-green"></i></div>
+                <h3 class="interest-title">AI-конференции</h3>
+                <div class="interest-desc">Networking и свежие тренды</div>
+            </div>
+            <div class="interest-card fade-in scale-in" style="transition-delay:0.4s">
+                <div class="interest-icon-wrap" style="background:rgba(108,92,231,0.1)"><i class="ph-duotone ph-trophy icon-purple"></i></div>
+                <h3 class="interest-title">Соревнования</h3>
+                <div class="interest-desc">Kaggle, олимпиады, хакатоны</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="contact-content">
+            <div class="section-label fade-in" style="justify-content:center;">Контакты</div>
+            <h2 class="section-title fade-in" style="text-align:center;">Давайте <span class="highlight">работать вместе</span></h2>
+            <p class="fade-in">Открыт к сотрудничеству, стажировкам и участию в проектах. Напишите — и я отвечу в течение дня.</p>
+            <div class="contact-links fade-in">
+                <a href="https://t.me/Andrei_diffurs" target="_blank" class="contact-link"><i class="fab fa-telegram"></i> Telegram</a>
+                <a href="https://github.com/AndreiGanin2910" target="_blank" class="contact-link"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://www.kaggle.com/qwertyyyy769492" target="_blank" class="contact-link"><i class="fab fa-kaggle"></i> Kaggle</a>
+                <a href="mailto:andrei_ganin09@gmail.com" class="contact-link"><i class="ph-duotone ph-envelope-simple"></i> Email</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer"><p>© 2026 Андрей Ганин
+
+    <script>
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.fade-in,.fade-in-left,.fade-in-right,.scale-in').forEach(el => observer.observe(el));
+
+        window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50); });
+
+        const countObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const el = e.target, target = parseInt(el.dataset.target);
+                    if (!target) return;
+                    let cur = 0; const inc = target / 40;
+                    const t = setInterval(() => { cur += inc; if (cur >= target) { el.textContent = target; clearInterval(t); } else el.textContent = Math.floor(cur); }, 30);
+                    countObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
+
+        const barObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.querySelectorAll('.percentage-fill').forEach(fill => {
+                        const w = fill.dataset.targetWidth;
+                        if (w) { fill.style.width = '0%'; setTimeout(() => fill.style.width = w + '%', 200); }
+                    });
+                    barObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.kaggle-card').forEach(el => barObserver.observe(el));
+
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+        document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active')));
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) { e.preventDefault(); const t = document.querySelector(this.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+        });
+    </script>
+</body>
+</html>
