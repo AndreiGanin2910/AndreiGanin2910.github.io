@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Андрей Ганин — ML Engineer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta name="description" content="Портфолио Андрея Ганина: рекомендательные системы, табличный ML, PyTorch и соревновательные проекты с проверяемыми результатами.">
+    <meta name="author" content="Андрей Ганин">
+    <meta name="theme-color" content="#0a0a0f">
+    <link rel="canonical" href="https://andreiganin2910.github.io/">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236c5ce7'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Arial' font-size='26' font-weight='700' fill='white'%3EAG%3C/text%3E%3C/svg%3E">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:title" content="Андрей Ганин — ML Engineer">
+    <meta property="og:description" content="Рекомендательные системы, табличный ML и Applied AI — с кодом и проверяемыми результатами.">
+    <meta property="og:url" content="https://andreiganin2910.github.io/">
+    <meta property="og:image" content="https://andreiganin2910.github.io/photo.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
     <style>
@@ -56,12 +68,13 @@
         .nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(20px); background: rgba(10,10,15,0.8); border-bottom: 1px solid var(--border); transition: all 0.3s ease; }
         .nav.scrolled { padding: 10px 40px; background: rgba(10,10,15,0.95); }
         .nav-logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(135deg, var(--accent-light), var(--green)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        a.nav-logo { text-decoration: none; }
         .nav-links { display: flex; gap: 32px; list-style: none; }
         .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease; position: relative; }
         .nav-links a:hover { color: var(--accent-light); }
         .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.3s ease; }
         .nav-links a:hover::after { width: 100%; }
-        .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; }
+        .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; background: transparent; border: 0; padding: 8px; }
         .burger span { width: 25px; height: 2px; background: var(--text-primary); transition: 0.3s; }
 
         /* SECTIONS */
@@ -102,6 +115,7 @@
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 30px var(--accent-glow); }
         .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border); }
         .btn-outline:hover { border-color: var(--accent); background: rgba(108,92,231,0.05); transform: translateY(-3px); }
+        a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; }
 
         .hero-photo-container { position: relative; display: flex; justify-content: center; align-items: center; }
         .hero-photo-frame { position: relative; width: 380px; height: 380px; border-radius: 30px; overflow: hidden; border: 2px solid var(--border); background: var(--bg-card); }
@@ -210,6 +224,8 @@
         .project-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.7; }
         .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
         .stack-tag { padding: 4px 12px; background: rgba(108,92,231,0.06); border: 1px solid var(--border); border-radius: 6px; font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); }
+        .project-link { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; color: var(--accent-light); text-decoration: none; font-size: 0.88rem; font-weight: 700; }
+        .project-link:hover { color: var(--green); }
 
         /* INTERESTS */
         .interests-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
@@ -231,16 +247,14 @@
         .footer { position: relative; z-index: 1; padding: 30px 40px; border-top: 1px solid var(--border); text-align: center; }
         .footer p { color: var(--text-muted); font-size: 0.85rem; }
         .footer .heart { color: var(--red); }
-        .count-up { display: inline-block; }
-
         @media (max-width: 900px) {
             section { padding: 60px 20px; }
             .hero-content { grid-template-columns: 1fr; gap: 40px; text-align: center; }
             .hero-name { font-size: 2.8rem; }
             .hero-subtitle { margin: 0 auto 24px; }
             .hero-stats { justify-content: center; }
-            .hero-buttons { justify-content: center; }
-            .hero-photo-container { order: -1; }
+            .hero-buttons { justify-content: center; flex-wrap: wrap; }
+            .hero-photo-container { order: initial; margin-top: 12px; }
             .hero-photo-frame { width: 250px; height: 250px; }
             .about-grid { grid-template-columns: 1fr; }
             .skills-grid { grid-template-columns: 1fr; }
@@ -256,7 +270,14 @@
             .nav-links a { font-size: 1.3rem; }
             .burger { display: flex; }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+            .fade-in, .fade-in-left, .fade-in-right, .scale-in { opacity: 1; transform: none; }
+        }
     </style>
+    <noscript><style>.fade-in,.fade-in-left,.fade-in-right,.scale-in{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
     <div class="bg-grid"></div>
@@ -265,37 +286,36 @@
     <div class="floating-orb orb-3"></div>
 
     <nav class="nav" id="nav">
-        <div class="nav-logo">Andrei Ganin</div>
+        <a class="nav-logo" href="#hero" aria-label="На первый экран">Andrei Ganin</a>
         <ul class="nav-links" id="navLinks">
             <li><a href="#about">Обо мне</a></li>
+            <li><a href="#projects">Проекты</a></li>
             <li><a href="#skills">Навыки</a></li>
             <li><a href="#achievements">Достижения</a></li>
             <li><a href="#kaggle">Kaggle</a></li>
-            <li><a href="#projects">Проекты</a></li>
             <li><a href="#contact">Контакты</a></li>
         </ul>
-        <div class="burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+        <button class="burger" type="button" aria-label="Открыть меню" aria-controls="navLinks" aria-expanded="false" onclick="toggleMenu(this)"><span></span><span></span><span></span></button>
     </nav>
 
     <!-- HERO -->
     <section class="hero" id="hero">
         <div class="hero-content">
             <div class="hero-text fade-in-left">
-                <div class="hero-badge"><span class="dot"></span> Открыт к предложениям</div>
+                <div class="hero-badge"><span class="dot"></span> Открыт к стажировке и Junior ML роли</div>
                 <h1 class="hero-name">Андрей<br><span class="gradient">Ганин</span></h1>
                 <p class="hero-subtitle">
-                    <strong>ML-инженер</strong> и олимпиадник по ИИ.
-                    Призёр НТО, финалист Всеросса, бронзовый медалист Kaggle.
-                    Никогда не сдаюсь и работаю на максимум.
+                    <strong>ML-инженер</strong> с сильным соревновательным бэкграундом.
+                    Строю воспроизводимые пайплайны: от признаков и валидации до ансамблей и инференса.
                 </p>
                 <div class="hero-stats">
-                    <div class="stat"><div class="stat-number count-up" data-target="18">0</div><div class="stat-label">Соревнований Kaggle</div></div>
+                    <div class="stat"><div class="stat-number">18</div><div class="stat-label">Соревнований Kaggle</div></div>
                     <div class="stat"><div class="stat-number">Top 2%</div><div class="stat-label">Лучший результат</div></div>
-                    <div class="stat"><div class="stat-number count-up" data-target="17">0</div><div class="stat-label">Лет</div></div>
+                    <div class="stat"><div class="stat-number">17</div><div class="stat-label">Лет</div></div>
                 </div>
                 <div class="hero-buttons">
                     <a href="#contact" class="btn btn-primary"><i class="ph-duotone ph-paper-plane-tilt"></i> Связаться</a>
-                    <a href="https://github.com/AndreiGanin2910" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="#projects" class="btn btn-outline"><i class="ph-duotone ph-folder-open"></i> Смотреть проекты</a>
                 </div>
             </div>
             <div class="hero-photo-container fade-in-right">
@@ -314,9 +334,9 @@
         <div class="about-grid">
             <div class="about-text fade-in-left">
                 <div class="section-label">Обо мне</div>
-                <h2 class="section-title">Строю модели,<br><span class="highlight">ломаю лидерборды</span></h2>
-                <p>Мне 17 лет, я из Москвы. Занимаюсь машинным обучением, участвую в олимпиадах по искусственному интеллекту и соревнованиях на Kaggle. За плечами — <strong>18 соревнований</strong>, бронзовая медаль и сотни часов работы.</p>
-                <p>Мой стек: от классического ML с CatBoost и LightGBM до глубокого обучения на PyTorch, компьютерного зрения (YOLO, ResNet, ViT), NLP (BERT, GPT) и генеративного ИИ (RAG, LoRA, Stable Diffusion).</p>
+                <h2 class="section-title">От данных<br><span class="highlight">до инференса</span></h2>
+                <p>Мне 17 лет, я из Москвы. Фокусируюсь на Applied ML: рекомендательных системах, табличных задачах, NLP, CV и аудио. За плечами — <strong>18 соревнований</strong>, бронзовая медаль Kaggle и призовые места в олимпиадах и хакатонах.</p>
+                <p>В проектах показываю не только итоговый скор, но и то, как устроены признаки, валидация, ансамблирование и воспроизводимый запуск.</p>
                 <p>Помимо кода люблю <strong>ходить в зал</strong>, играть в <strong>волейбол</strong> и посещать <strong>конференции</strong> по AI.</p>
             </div>
             <div class="about-details fade-in-right">
@@ -338,7 +358,7 @@
                 </div>
                 <div class="detail-card">
                     <div class="detail-icon"><i class="ph-duotone ph-volleyball icon-orange"></i></div>
-                    <div class="detail-label">Спорт</div><div class="detail-value">Зал & Волейбол</div>
+                    <div class="detail-label">Спорт</div><div class="detail-value">Зал &amp; Волейбол</div>
                 </div>
                 <div class="detail-card">
                     <div class="detail-icon"><i class="ph-duotone ph-microphone-stage icon-green"></i></div>
@@ -355,7 +375,7 @@
         <div class="skills-grid">
             <div class="skill-category fade-in" style="transition-delay:0.1s">
                 <div class="skill-cat-icon" style="background:rgba(108,92,231,0.1)"><i class="ph-duotone ph-code icon-purple"></i></div>
-                <h3 class="skill-cat-title">Python & Core</h3>
+                <h3 class="skill-cat-title">Python &amp; Core</h3>
                 <div class="skill-tags"><span class="skill-tag">Python</span><span class="skill-tag">NumPy</span><span class="skill-tag">Pandas</span><span class="skill-tag">OOP</span><span class="skill-tag">itertools</span><span class="skill-tag">collections</span></div>
             </div>
             <div class="skill-category fade-in" style="transition-delay:0.2s">
@@ -370,12 +390,12 @@
             </div>
             <div class="skill-category fade-in" style="transition-delay:0.4s">
                 <div class="skill-cat-icon" style="background:rgba(255,145,0,0.1)"><i class="ph-duotone ph-chat-centered-text icon-orange"></i></div>
-                <h3 class="skill-cat-title">NLP & GenAI</h3>
+                <h3 class="skill-cat-title">NLP &amp; GenAI</h3>
                 <div class="skill-tags"><span class="skill-tag">Transformers</span><span class="skill-tag">BERT</span><span class="skill-tag">GPT</span><span class="skill-tag">LangChain</span><span class="skill-tag">RAG</span><span class="skill-tag">LoRA</span><span class="skill-tag">Ollama</span></div>
             </div>
             <div class="skill-category fade-in" style="transition-delay:0.5s">
                 <div class="skill-cat-icon" style="background:rgba(255,82,82,0.1)"><i class="ph-duotone ph-chart-line-up icon-red"></i></div>
-                <h3 class="skill-cat-title">Аналитика & Визуализация</h3>
+                <h3 class="skill-cat-title">Аналитика &amp; Визуализация</h3>
                 <div class="skill-tags"><span class="skill-tag">SQL</span><span class="skill-tag">Matplotlib</span><span class="skill-tag">Seaborn</span><span class="skill-tag">Plotly</span><span class="skill-tag">Streamlit</span><span class="skill-tag">A/B тесты</span></div>
             </div>
             <div class="skill-category fade-in" style="transition-delay:0.6s">
@@ -398,7 +418,7 @@
             </div>
             <div class="achievement-card fade-in" style="transition-delay:0.15s">
                 <div><div class="achievement-icon-wrap" style="background:rgba(0,230,118,0.1)"><i class="ph-duotone ph-flag-banner icon-green"></i></div><div class="achievement-rank-text">Финалист</div></div>
-                <div class="achievement-info"><h3>Всероссийская олимпиада школьников</h3><p>Финалист заключительного этапа по ИИ (50 человек с России)</p></div>
+                <div class="achievement-info"><h3>Всероссийская олимпиада школьников</h3><p>Финалист заключительного этапа по ИИ — топ-50 участников со всей России</p></div>
                 <div class="achievement-meta"><span class="achievement-badge badge-finalist"><i class="ph-duotone ph-flag-banner"></i> Финалист</span></div>
             </div>
             <div class="achievement-card fade-in" style="transition-delay:0.2s">
@@ -432,7 +452,7 @@
                 <h2 class="section-title fade-in">Все <span class="highlight">соревнования</span></h2>
             </div>
             <div class="kaggle-stats-bar fade-in">
-                <div class="kaggle-stat"><div class="kaggle-stat-num count-up" data-target="18">0</div><div class="kaggle-stat-label">Соревнований</div></div>
+                <div class="kaggle-stat"><div class="kaggle-stat-num">18</div><div class="kaggle-stat-label">Соревнований</div></div>
                 <div class="kaggle-stat"><div class="kaggle-stat-num">1</div><div class="kaggle-stat-label">Медаль</div></div>
                 <div class="kaggle-stat"><div class="kaggle-stat-num">14</div><div class="kaggle-stat-label">Соло</div></div>
                 <div class="kaggle-stat"><div class="kaggle-stat-num">4</div><div class="kaggle-stat-label">В команде</div></div>
@@ -531,7 +551,7 @@
             </div>
         </div>
         <div style="text-align:center; margin-top:40px;">
-            <a href="https://www.kaggle.com/qwertyyyy769492" target="_blank" class="btn btn-outline"><i class="fab fa-kaggle"></i> Полный профиль на Kaggle</a>
+            <a href="https://www.kaggle.com/qwertyyyy769492" target="_blank" rel="noopener noreferrer" class="btn btn-outline"><i class="fab fa-kaggle"></i> Полный профиль на Kaggle</a>
         </div>
     </section>
 
@@ -545,40 +565,46 @@
                 <h3 class="project-title">Предсказание функции белка</h3>
                 <p class="project-desc">Мультилейбл классификация белков по Gene Ontology. Ансамбль моделей, feature engineering на последовательностях. Top 5% Kaggle.</p>
                 <div class="project-stack"><span class="stack-tag">PyTorch</span><span class="stack-tag">LightGBM</span><span class="stack-tag">Embeddings</span><span class="stack-tag">Ensemble</span></div>
+                <a class="project-link" href="https://www.kaggle.com/qwertyyyy769492" target="_blank" rel="noopener noreferrer"><i class="fab fa-kaggle"></i> Результат на Kaggle</a>
             </div>
             <div class="project-card fade-in" style="transition-delay:0.2s">
-                <div class="project-icon-wrap" style="background:rgba(108,92,231,0.1)"><i class="ph-duotone ph-chat-circle-dots icon-purple"></i></div>
-                <h3 class="project-title">RAG-ассистент на документах</h3>
-                <p class="project-desc">Чат-бот с поиском по PDF-документам. Local LLM через Ollama, векторная база ChromaDB, интерфейс на Streamlit.</p>
-                <div class="project-stack"><span class="stack-tag">LangChain</span><span class="stack-tag">ChromaDB</span><span class="stack-tag">Ollama</span><span class="stack-tag">Streamlit</span></div>
+                <div class="project-icon-wrap" style="background:rgba(108,92,231,0.1)"><i class="ph-duotone ph-chart-line-up icon-purple"></i></div>
+                <h3 class="project-title">Data Fusion — multi-label ML</h3>
+                <p class="project-desc">41 банковский таргет, 1 млн клиентов и 2 441 признак. Leakage-safe OOF-признаки, LightGBM, CatBoost и нейросетевой rank blend. Private ROC-AUC 0,845, Top-60.</p>
+                <div class="project-stack"><span class="stack-tag">LightGBM</span><span class="stack-tag">CatBoost</span><span class="stack-tag">PyTorch</span><span class="stack-tag">OOF</span></div>
+                <a class="project-link" href="https://github.com/AndreiGanin2910/Data-Fusion-top-60" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> Код и описание</a>
             </div>
             <div class="project-card fade-in" style="transition-delay:0.3s">
-                <div class="project-icon-wrap" style="background:rgba(0,176,255,0.1)"><i class="ph-duotone ph-scan icon-blue"></i></div>
-                <h3 class="project-title">Object Detection — YOLO</h3>
-                <p class="project-desc">Детекция объектов на изображениях. Fine-tuning YOLOv8, аугментации через Albumentations, TTA, WBF-ансамбли.</p>
-                <div class="project-stack"><span class="stack-tag">YOLOv8</span><span class="stack-tag">Albumentations</span><span class="stack-tag">OpenCV</span><span class="stack-tag">WandB</span></div>
+                <div class="project-icon-wrap" style="background:rgba(0,176,255,0.1)"><i class="ph-duotone ph-waveform icon-blue"></i></div>
+                <h3 class="project-title">Keyword spotting в аудиозаписях</h3>
+                <p class="project-desc">Поиск целевых фраз в длинных OPUS-записях: log-Mel-признаки, hard negatives, SpecAugment, MixUp и ансамбль PyTorch-моделей. Harmonic mean 0,943 на настроенной валидации.</p>
+                <div class="project-stack"><span class="stack-tag">PyTorch</span><span class="stack-tag">torchaudio</span><span class="stack-tag">CRNN</span><span class="stack-tag">Transformer</span></div>
+                <a class="project-link" href="https://github.com/AndreiGanin2910/Vseross-AI-2025" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> Код и описание</a>
             </div>
             <div class="project-card fade-in" style="transition-delay:0.4s">
                 <div class="project-icon-wrap" style="background:rgba(255,145,0,0.1)"><i class="ph-duotone ph-graph icon-orange"></i></div>
                 <h3 class="project-title">Рекомендательная система</h3>
-                <p class="project-desc">Гибридная RecSys: коллаборативная фильтрация + контентные эмбеддинги. 2 место на хакатоне.</p>
-                <div class="project-stack"><span class="stack-tag">LightFM</span><span class="stack-tag">CatBoost</span><span class="stack-tag">implicit</span></div>
+                <p class="project-desc">ALS, BPR, SVD-CF, текстовые признаки и CatBoost learning-to-rank с diversity-aware reranking. 2 место среди 300 команд.</p>
+                <div class="project-stack"><span class="stack-tag">ALS / BPR</span><span class="stack-tag">CatBoost</span><span class="stack-tag">Item2Vec</span><span class="stack-tag">Reranking</span></div>
+                <a class="project-link" href="https://github.com/AndreiGanin2910/Hackathon-by-pages-2-place.-RecSys" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> Код и описание</a>
             </div>
             <div class="project-card fade-in" style="transition-delay:0.5s">
                 <div class="project-icon-wrap" style="background:rgba(255,215,0,0.1)"><i class="ph-duotone ph-currency-btc icon-gold"></i></div>
                 <h3 class="project-title">Bybit Market Microstructure Analyzer</h3>
                 <p class="project-desc">Одной командой — полный анализ микроструктуры рынка за 24 часа. Сбор ордербука, трейдов и ликвидаций через API Bybit, расчёт метрик (spread, imbalance, VWAP, volatility), визуализация и автоотчёт.</p>
                 <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">Bybit API</span><span class="stack-tag">Pandas</span><span class="stack-tag">Plotly</span><span class="stack-tag">asyncio</span></div>
+                <a class="project-link" href="https://github.com/AndreiGanin2910/Market-Microstructure-Analyzer" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> Код и описание</a>
             </div>
             <div class="project-card fade-in" style="transition-delay:0.6s">
                 <div class="project-icon-wrap" style="background:rgba(0,176,255,0.1)"><i class="ph-duotone ph-house-line icon-blue"></i></div>
                 <h3 class="project-title">House Prices — Top 2%</h3>
                 <p class="project-desc">Feature engineering, stacking, блендинг моделей. 76 место из 4500+ команд.</p>
                 <div class="project-stack"><span class="stack-tag">CatBoost</span><span class="stack-tag">XGBoost</span><span class="stack-tag">Optuna</span><span class="stack-tag">Stacking</span></div>
+                <a class="project-link" href="https://www.kaggle.com/qwertyyyy769492" target="_blank" rel="noopener noreferrer"><i class="fab fa-kaggle"></i> Результат на Kaggle</a>
             </div>
         </div>
         <div style="text-align:center; margin-top:40px;">
-            <a href="https://github.com/AndreiGanin2910" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> Все проекты на GitHub</a>
+            <a href="https://github.com/AndreiGanin2910" target="_blank" rel="noopener noreferrer" class="btn btn-outline"><i class="fab fa-github"></i> Все проекты на GitHub</a>
         </div>
     </section>
 
@@ -615,17 +641,17 @@
         <div class="contact-content">
             <div class="section-label fade-in" style="justify-content:center;">Контакты</div>
             <h2 class="section-title fade-in" style="text-align:center;">Давайте <span class="highlight">работать вместе</span></h2>
-            <p class="fade-in">Открыт к сотрудничеству, стажировкам и участию в проектах. Напишите — и я отвечу в течение дня.</p>
+            <p class="fade-in">Открыт к ML-стажировкам, Junior ML ролям и проектному сотрудничеству — удалённо или в Москве. Напишите, и я отвечу в течение дня.</p>
             <div class="contact-links fade-in">
-                <a href="https://t.me/Andrei_diffurs" target="_blank" class="contact-link"><i class="fab fa-telegram"></i> Telegram</a>
-                <a href="https://github.com/AndreiGanin2910" target="_blank" class="contact-link"><i class="fab fa-github"></i> GitHub</a>
-                <a href="https://www.kaggle.com/qwertyyyy769492" target="_blank" class="contact-link"><i class="fab fa-kaggle"></i> Kaggle</a>
+                <a href="https://t.me/Andrei_diffurs" target="_blank" rel="noopener noreferrer" class="contact-link"><i class="fab fa-telegram"></i> Telegram</a>
+                <a href="https://github.com/AndreiGanin2910" target="_blank" rel="noopener noreferrer" class="contact-link"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://www.kaggle.com/qwertyyyy769492" target="_blank" rel="noopener noreferrer" class="contact-link"><i class="fab fa-kaggle"></i> Kaggle</a>
                 <a href="mailto:andrei_ganin09@gmail.com" class="contact-link"><i class="ph-duotone ph-envelope-simple"></i> Email</a>
             </div>
         </div>
     </section>
 
-    <footer class="footer"><p>© 2026 Андрей Ганин
+    <footer class="footer"><p>© 2026 Андрей Ганин</p></footer>
 
     <script>
         const observer = new IntersectionObserver(entries => {
@@ -634,19 +660,6 @@
         document.querySelectorAll('.fade-in,.fade-in-left,.fade-in-right,.scale-in').forEach(el => observer.observe(el));
 
         window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50); });
-
-        const countObserver = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    const el = e.target, target = parseInt(el.dataset.target);
-                    if (!target) return;
-                    let cur = 0; const inc = target / 40;
-                    const t = setInterval(() => { cur += inc; if (cur >= target) { el.textContent = target; clearInterval(t); } else el.textContent = Math.floor(cur); }, 30);
-                    countObserver.unobserve(el);
-                }
-            });
-        }, { threshold: 0.5 });
-        document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
 
         const barObserver = new IntersectionObserver(entries => {
             entries.forEach(e => {
@@ -661,8 +674,18 @@
         }, { threshold: 0.2 });
         document.querySelectorAll('.kaggle-card').forEach(el => barObserver.observe(el));
 
-        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
-        document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active')));
+        function toggleMenu(button) {
+            const menu = document.getElementById('navLinks');
+            const isOpen = menu.classList.toggle('active');
+            button.setAttribute('aria-expanded', String(isOpen));
+            button.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+        }
+        document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => {
+            document.getElementById('navLinks').classList.remove('active');
+            const button = document.querySelector('.burger');
+            button.setAttribute('aria-expanded', 'false');
+            button.setAttribute('aria-label', 'Открыть меню');
+        }));
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', function(e) { e.preventDefault(); const t = document.querySelector(this.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
         });
